@@ -1,5 +1,8 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import styled from "styled-components";
+
+// 개발자 컴포넌트
+import useInput from '../../../hooks/useInput';
 
 // icon
 import { AiOutlineSearch } from "react-icons/ai";
@@ -7,6 +10,15 @@ import { FaRegPaperPlane } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 
 const ApprovalCom = () => {
+  const [userId, handleUserIdChange] = useInput('');
+  const [description, handleDesChange] = useInput('');
+  const [isUserId, setIsUserId] = useState(false);
+
+  const handleOnUserIdCheck = () => {
+    alert("존재하는 회원입니다.");
+    setIsUserId(true);
+  }
+
   return (
     <Fragment>
       <Header>
@@ -14,18 +26,25 @@ const ApprovalCom = () => {
         <HeadTitle>Approval</HeadTitle>
       </Header>
       <SubDiv>
-        <Input />
-        <SearchButton>
-          <AiOutlineSearch className="AiOutlineSearch2" />
-          회원 찾기
-        </SearchButton>
+        <FlexBox>
+          <Input onChange={handleUserIdChange} />
+          <SearchButton onClick={handleOnUserIdCheck}>
+            <AiOutlineSearch className="AiOutlineSearch2" />
+            회원 찾기
+          </SearchButton>
+        </FlexBox>
+        {isUserId && userId !== '' && (
+          <UserNameBox>{userId}</UserNameBox>
+        )}
       </SubDiv>
       <SubDiv>
-        <SubText>결재 서류 업로드</SubText>
-        <FileButton for="file">파일선택</FileButton>
-        <InputFileHidden type="file" name="file" id="file" accept='.hwp, .pdf' />
+        <FlexBox>
+          <SubText>결재 서류 업로드</SubText>
+          <FileButton htmlFor="file">파일선택</FileButton>
+          <InputFileHidden type="file" name="file" id="file" accept='.hwp, .pdf' />
+        </FlexBox>
       </SubDiv>
-      <Textarea />
+      <Textarea onChange={handleDesChange} />
       <SubmitButton>
         <FaRegPaperPlane style={{ color: "#ffffff", marginRight: "10px" }} />
         전송하기
@@ -51,7 +70,25 @@ const HeadTitle = styled.div`
 
 const SubDiv = styled.div`
   display: flex;
+  flex-direction: column;
   margin-top: 10px;
+`;
+
+const FlexBox = styled.div`
+  display: flex;
+`;
+
+const UserNameBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 25px;
+  border: solid 2px #81F79F;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-left: 8px;
+  font-size: 14px;
 `;
 
 const Input = styled.input`
@@ -61,7 +98,7 @@ const Input = styled.input`
 `;
 
 const SearchButton = styled.div`
-  width: 66px;
+  width: 80px;
   height: 22px;
   background: #ffffff;
   border: 0.5px solid #535571;
@@ -102,10 +139,11 @@ const FileButton = styled.label`
 `;
 
 const SubText = styled.div`
-  font-size: 8px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   margin: 8px;
+
 `;
 
 const Textarea = styled.textarea`
@@ -113,7 +151,7 @@ const Textarea = styled.textarea`
   height: 40vh;
   background: #ffffff;
   border: 0.5px solid #535571;
-  margin-top: 50px;
+  margin-top: 20px;
 `;
 
 const SubmitButton = styled.div`
