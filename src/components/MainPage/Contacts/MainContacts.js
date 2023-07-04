@@ -2,18 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import profileExImg from "./../../../assets/profileExImg.png";
 import { FiSend } from "react-icons/fi";
+import { HiOutlineHeart, HiOutlineDotsHorizontal } from "react-icons/hi";
 
 const MainContacts = () => {
   return (
     <ContactWrap>
       <ContactDiv>
+        <MenuDiv>
+          <HiOutlineDotsHorizontal style={{ color: "lightgray" }} />
+        </MenuDiv>
         <ProfileImg src={profileExImg} />
         <CalendarButton>Calendar</CalendarButton>
         <ButtonsDiv>
           <IconButton>
-            <FiSend />
+            <FiSend style={{ width: "12px" }} />
           </IconButton>
-          <IconButton></IconButton>
+          <IconButton>
+            <HiOutlineHeart style={{ width: "12px" }} />
+          </IconButton>
         </ButtonsDiv>
       </ContactDiv>
     </ContactWrap>
@@ -38,6 +44,11 @@ const ContactDiv = styled.div`
   justify-content: center;
   align-items: center;
 `;
+const MenuDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 const ProfileImg = styled.img`
   width: 60px;
   height: 60px;

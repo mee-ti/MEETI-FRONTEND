@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import styled from "styled-components";
 import color from "./../../assets/color.png";
-import { useNavigate } from "react-router-dom";
-import ApprovalCom from "../../components/MainPage/Approval/ApprovalCom";
+import Cal from "../../components/MainPage/Calendar/Calendar";
+import RoomCom from "../../components/MainPage/Reservation/RoomCom";
+import Menubar from "../../components/Menubar";
 
 import { Link } from "react-router-dom";
 
@@ -11,7 +12,87 @@ import { AiOutlineCalendar } from "react-icons/ai";
 import { FaRegAddressBook } from "react-icons/fa";
 import { RiMapPinLine } from "react-icons/ri";
 import { HiOutlineMail } from "react-icons/hi";
+import { BiPhoneCall } from "react-icons/bi";
+import axios from "axios";
 import MainContacts from "../../components/MainPage/Contacts/MainContacts";
+
+const ReservationPage = () => {
+  const [reservationList, setReservationList] = useState([]);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    try {
+      const url = `https://${process.env.REACT_APP_SECRET_URL}/reservation/get-reservation`;
+      const res = await axios.get(url);
+      console.log(res);
+      setReservationList(res.data.office);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const Card = () => {
+    return (
+      <Fragment>
+        {reservationList.map((item) => {
+          return (
+            <ScheduleBox key={item._id}>
+              <SubDiv>
+                <SubLeftDiv>
+                  <SubOptionImg src={item.imgUrl} alt="이미지 없음" />
+                </SubLeftDiv>
+                <SubRightDiv>
+                  <SubOptionDate>{item.date}</SubOptionDate>
+                  <SubOptionArea>{item.areaName}</SubOptionArea>
+                  <SubOptionPlace>{item.placeName}</SubOptionPlace>
+                  <SubOptionTelDiv>
+                    <BiPhoneCall style={{ color: "#8165df" }} />
+                    <SubOptionTelNum>{item.telNum}</SubOptionTelNum>
+                  </SubOptionTelDiv>
+                </SubRightDiv>
+              </SubDiv>
+            </ScheduleBox>
+          );
+        })}
+      </Fragment>
+    );
+  };
+
+  return (
+    <Test>
+      <MainDiv className="MainDiv">
+        <BackColor src={color} style={{ opacity: 0.2 }} />
+        <Header>
+          <Link to="/calendar">
+            <AiOutlineCalendar className="false" />
+          </Link>
+          <Link to="/contacts">
+            <FaRegAddressBook className="true" />
+          </Link>
+          <Link to="/reservation">
+            <RiMapPinLine className="false" />
+          </Link>
+          <Link to="/approval">
+            <HiOutlineMail className="false" />
+          </Link>
+        </Header>
+        <Mid>
+          <Title>최근 연락처</Title>
+          <SubTitle>Recent Contacts</SubTitle>
+          <Card />
+        </Mid>
+        <Last>
+          <MainContacts />
+        </Last>
+      </MainDiv>
+    </Test>
+  );
+};
+
+export default ReservationPage;
 
 const Test = styled.div`
   width: 100vw;
@@ -22,6 +103,7 @@ const MainDiv = styled.div`
   position: absolute;
   width: 90vw;
   height: 85vh;
+
   margin-top: 78px;
   margin-left: 69px;
   margin-right: 69px;
@@ -31,7 +113,6 @@ const MainDiv = styled.div`
   display: flex;
   flex-direction: row;
   z-index: 2;
-  justify-content: center;
 `;
 const BackColor = styled.img`
   position: absolute;
@@ -62,43 +143,85 @@ const Title = styled.div`
   margin-top: 20px;
   margin-bottom: 5px;
 `;
-const SubTitle = styled.div``;
+const SubTitle = styled.div`
+  margin-bottom: 10px;
+`;
 
 const Last = styled.div`
   background: #f8f8f8;
-  width: 60vw;
-  height: 340px;
+  width: 60%;
+  height: 100%;
   border-radius: 20px;
   z-index: 3;
+  overflow: scroll;
 `;
-const ContactsPage = () => {
-  return (
-    <Test>
-      <MainDiv className="MainDiv">
-        <BackColor src={color} style={{ opacity: 0.2 }} />
-        <Header>
-          <Link to="/calendar">
-            <AiOutlineCalendar className="false" />
-          </Link>
-          <Link to="/">
-            <FaRegAddressBook className="true" />
-          </Link>
-          <Link to="/reservation">
-            <RiMapPinLine className="false" />
-          </Link>
-          <Link to="/approval">
-            <HiOutlineMail className="false" />
-          </Link>
-        </Header>
-        <Mid>
-          <Title>최근 연락처</Title>
-          <SubTitle>Recent Contacts</SubTitle>
-        </Mid>
-        <Last>
-          <MainContacts />
-        </Last>
-      </MainDiv>
-    </Test>
-  );
-};
-export default ContactsPage;
+
+const ScheduleBox = styled.div`
+  width: 80%;
+  padding: 10px;
+  border: solid 1px #e6e6e6;
+  border-radius: 15px;
+  background-color: #fff;
+  margin-bottom: 15px;
+`;
+const SubDiv = styled.div`
+  display: flex;
+`;
+const SubLeftDiv = styled.div`
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const SubRightDiv = styled.div`
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 5px;
+`;
+
+const SubOptionImg = styled.img`
+  border-radius: 10px;
+  margin: auto;
+  width: 119px;
+  height: 99px;
+  object-fit: cover;
+`;
+const SubOptionDate = styled.div`
+  color: #535571;
+  font-size: 12px;
+  margin: 5px;
+`;
+const SubOptionPlace = styled.div`
+  font-size: 14px;
+  margin: 5px;
+`;
+
+const SubOptionArea = styled.div`
+  margin: 3px;
+  padding: 2px;
+  padding-left: 6px;
+  padding-right: 6px;
+  background: #f8f8f8;
+  border: 1px solid #8165df;
+  border-radius: 50px;
+  width: 36px;
+  margin-top: 0px;
+  height: 15px;
+  font-size: 10px;
+  color: #8165df;
+  text-align: center;
+`;
+const SubOptionTelDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-left: 3px;
+`;
+const SubOptionTelNum = styled.div`
+  font-size: 10px;
+  margin-left: 5px;
+  color: #8165df;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
