@@ -15,52 +15,9 @@ import { HiOutlineMail } from "react-icons/hi";
 import { BiPhoneCall } from "react-icons/bi";
 import axios from "axios";
 import MainContacts from "../../components/MainPage/Contacts/MainContacts";
+import RecentContacts from "../../components/MainPage/Contacts/RecentContacts";
 
-const ReservationPage = () => {
-  const [reservationList, setReservationList] = useState([]);
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    try {
-      const url = `https://${process.env.REACT_APP_SECRET_URL}/reservation/get-reservation`;
-      const res = await axios.get(url);
-      console.log(res);
-      setReservationList(res.data.office);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const Card = () => {
-    return (
-      <Fragment>
-        {reservationList.map((item) => {
-          return (
-            <ScheduleBox key={item._id}>
-              <SubDiv>
-                <SubLeftDiv>
-                  <SubOptionImg src={item.imgUrl} alt="이미지 없음" />
-                </SubLeftDiv>
-                <SubRightDiv>
-                  <SubOptionDate>{item.date}</SubOptionDate>
-                  <SubOptionArea>{item.areaName}</SubOptionArea>
-                  <SubOptionPlace>{item.placeName}</SubOptionPlace>
-                  <SubOptionTelDiv>
-                    <BiPhoneCall style={{ color: "#8165df" }} />
-                    <SubOptionTelNum>{item.telNum}</SubOptionTelNum>
-                  </SubOptionTelDiv>
-                </SubRightDiv>
-              </SubDiv>
-            </ScheduleBox>
-          );
-        })}
-      </Fragment>
-    );
-  };
-
+const ContactsPage = () => {
   return (
     <Test>
       <MainDiv className="MainDiv">
@@ -82,7 +39,7 @@ const ReservationPage = () => {
         <Mid>
           <Title>최근 연락처</Title>
           <SubTitle>Recent Contacts</SubTitle>
-          <Card />
+          <RecentContacts />
         </Mid>
         <Last>
           <MainContacts />
@@ -92,7 +49,7 @@ const ReservationPage = () => {
   );
 };
 
-export default ReservationPage;
+export default ContactsPage;
 
 const Test = styled.div`
   width: 100vw;
