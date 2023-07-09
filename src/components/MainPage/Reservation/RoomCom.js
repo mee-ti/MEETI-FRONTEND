@@ -329,10 +329,12 @@ const StatusTextRed = styled.div`
   color: red;
   font-size: 12px;
 `;
+
 const StatusTextGreen = styled.div`
   color: green;
   font-size: 12px;
 `;
+
 const PayText = styled.div`
   color: #535571;
   font-size: 12px;
@@ -341,10 +343,12 @@ const PayText = styled.div`
   }
   margin: 3px;
 `;
+
 const RoomSubTitle = styled.div`
   color: #535571;
   font-size: 12px;
 `;
+
 const AddButton = styled.div`
   width: 32px;
   height: 32px;
@@ -366,6 +370,7 @@ const SearchDiv = styled.div`
   width: 100%;
   align-items: center;
 `;
+
 const SearchInput = styled.input`
   width: 80%;
   height: 28px;

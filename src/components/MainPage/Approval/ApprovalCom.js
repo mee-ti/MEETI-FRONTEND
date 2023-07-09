@@ -17,7 +17,7 @@ const ApprovalCom = () => {
   const handleOnUserIdCheck = () => {
     alert("존재하는 회원입니다.");
     setIsUserId(true);
-  }
+  };
 
   return (
     <Fragment>
