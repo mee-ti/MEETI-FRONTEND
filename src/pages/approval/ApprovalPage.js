@@ -4,11 +4,19 @@ import { Link } from "react-router-dom";
 
 import ApprovalCom from "../../components/MainPage/Approval/ApprovalCom";
 import HeaderBar from '../../components/common/HeaderBar';
-
+// HiDownload
 // icon, img
 import color from "./../../assets/color.png";
+import { HiDownload } from 'react-icons/hi';
 
 const ApprovalPage = () => {
+
+  const handleDownloadClick = () => {
+    alert('파일 다운로드');
+  }
+
+
+
   const Card = () => {
     return (
       <Fragment>
@@ -24,7 +32,11 @@ const ApprovalPage = () => {
               점심메뉴 파일제목입니다.pptx
             </DownloadFileName>
             <DownloadBtn>
-              다운버튼
+              <HiDownload
+                onClick={handleDownloadClick}
+                size='24'
+                color='#fff'
+              />
             </DownloadBtn>
           </ApprovalDownloadBox>
           <ApprovalInputBox>
@@ -38,7 +50,7 @@ const ApprovalPage = () => {
             * 반려 시 반려내용을 꼭 입력해 주세요.
           </ApprovalText>
         </ApprovalBox>
-      </Fragment>
+      </Fragment >
     );
   };
 
@@ -167,18 +179,20 @@ const ApprovalDownloadBox = styled.div`
 `
 
 const DownloadFileName = styled.div`
-  width: 75%;
+  width: 85%;
   height: 100%; 
   display: flex;
   align-items: center;
 `
 
 const DownloadBtn = styled.div`
-  width: 15%;
-  height: 100%; 
+  width: 8%;
+  height: 55%; 
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  background-color: #848484;
 `
 
 const ApprovalInputBox = styled.div`
