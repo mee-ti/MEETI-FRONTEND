@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import profileImg from "./../../../assets/profileExImg.png";
 import { AiOutlineCalendar } from "react-icons/ai";
-import { HiOutlineHeart, HiOutlineDotsHorizontal } from "react-icons/hi";
+import {
+  HiHeart,
+  HiOutlineHeart,
+  HiOutlineDotsHorizontal,
+} from "react-icons/hi";
 
 const RecentContacts = () => {
+  const [heart, setHeart] = useState(false);
   return (
     <ContactDiv>
       <ContactLeft>
@@ -17,8 +22,16 @@ const RecentContacts = () => {
         <OtherButtons>
           <HiOutlineDotsHorizontal style={{ color: "#fff" }} />
         </OtherButtons>
-        <OtherButtons>
-          <HiOutlineHeart style={{ color: "#fff" }} />
+        <OtherButtons
+          onClick={() => {
+            setHeart(!heart);
+          }}
+        >
+          {heart ? (
+            <HiHeart style={{ width: "12px" }} />
+          ) : (
+            <HiOutlineHeart style={{ width: "12px" }} />
+          )}
         </OtherButtons>
       </ContactRight>
     </ContactDiv>
@@ -32,6 +45,7 @@ const ContactDiv = styled.div`
   background: #fff;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
   display: flex;
+  margin-bottom: 10px;
 `;
 const ContactLeft = styled.div`
   width: 50%;
@@ -72,5 +86,7 @@ const OtherButtons = styled.div`
   justify-content: center;
   align-items: center;
   margin: 7px;
+  cursor: pointer;
+  color: #fff;
 `;
 export default RecentContacts;

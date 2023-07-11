@@ -40,6 +40,13 @@ const ContactsPage = () => {
           <Title>최근 연락처</Title>
           <SubTitle>Recent Contacts</SubTitle>
           <RecentContacts />
+          <RecentContacts />
+          <RecentContacts />
+          <Title>즐겨찾기</Title>
+          <SubTitle>Bookmark</SubTitle>
+          <RecentContacts />
+          <RecentContacts />
+          <RecentContacts />
         </Mid>
         <Last>
           <MainContacts />
@@ -94,6 +101,7 @@ const Mid = styled.div`
   background: #f8f8f8;
   width: 30%;
   border-radius: 20px;
+  z-index: 3;
 `;
 const Title = styled.div`
   font-size: 20px;

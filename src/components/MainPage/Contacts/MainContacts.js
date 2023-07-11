@@ -1,27 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import profileExImg from "./../../../assets/profileExImg.png";
 import { FiSend } from "react-icons/fi";
-import { HiOutlineHeart, HiOutlineDotsHorizontal } from "react-icons/hi";
+import { FaRegAddressBook } from "react-icons/fa";
+import {
+  HiHeart,
+  HiOutlineHeart,
+  HiOutlineDotsHorizontal,
+} from "react-icons/hi";
+
+import { BiSearch } from "react-icons/bi";
 
 const MainContacts = () => {
+  const [search, setSearch] = useState("");
+  const handleOnClickBtn = () => {
+    if (search === "") alert("검색어를 입력해 주세요!");
+  };
+  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const [heart, setHeart] = useState(false);
   return (
     <ContactWrap>
-      <ContactDiv>
-        <MenuDiv>
-          <HiOutlineDotsHorizontal style={{ color: "lightgray" }} />
-        </MenuDiv>
-        <ProfileImg src={profileExImg} />
-        <CalendarButton>Calendar</CalendarButton>
-        <ButtonsDiv>
-          <IconButton>
-            <FiSend style={{ width: "12px" }} />
-          </IconButton>
-          <IconButton>
-            <HiOutlineHeart style={{ width: "12px" }} />
-          </IconButton>
-        </ButtonsDiv>
-      </ContactDiv>
+      <HeaderLeft>
+        <FaRegAddressBook className="true" style={{ padding: "0" }} />
+        <HeadTitle>Contacts</HeadTitle>
+        <SearchDiv>
+          <SearchInput onChange={(e) => setSearch(e.target.value)} />
+          <SearchButton onClick={handleOnClickBtn}>
+            <BiSearch />
+          </SearchButton>
+        </SearchDiv>
+      </HeaderLeft>
+      {arr.map((item, idx) => {
+        return (
+          <ContactDiv>
+            <MenuDiv>
+              <HiOutlineDotsHorizontal style={{ color: "lightgray" }} />
+            </MenuDiv>
+            <ProfileImg src={profileExImg} />
+            <CalendarButton>Calendar</CalendarButton>
+            <ButtonsDiv>
+              <IconButton>
+                <FiSend style={{ width: "12px" }} />
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  setHeart(!heart);
+                }}
+              >
+                {heart ? (
+                  <HiHeart style={{ width: "12px" }} />
+                ) : (
+                  <HiOutlineHeart style={{ width: "12px" }} />
+                )}
+              </IconButton>
+            </ButtonsDiv>
+          </ContactDiv>
+        );
+      })}
     </ContactWrap>
   );
 };
@@ -29,8 +64,45 @@ const MainContacts = () => {
 const ContactWrap = styled.div`
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: space-around;
+  overflow: scroll;
+`;
+const HeaderLeft = styled.div`
+  display: flex;
+  width: 90%;
+`;
+const HeadTitle = styled.div`
+  color: #6f5cea;
+  font-size: 14px;
+  margin-top: 30px;
+  margin-left: -10px;
+`;
+
+const SearchDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+`;
+const SearchInput = styled.input`
+  width: 80%;
+  height: 28px;
+  border: 1px solid #8165df;
+  border-radius: 30px;
+  padding-left: 15px;
+`;
+
+const SearchButton = styled.button`
+  background: #f0ebfa;
+  width: 32px;
+  height: 32px;
+  color: #6f5cea;
+  border: none;
+  cursor: pointer;
+  margin-left: -15px;
+  border-radius: 50%;
 `;
 
 const ContactDiv = styled.div`
@@ -43,6 +115,7 @@ const ContactDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 20px;
 `;
 const MenuDiv = styled.div`
   display: flex;
@@ -84,5 +157,6 @@ const IconButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 `;
 export default MainContacts;
