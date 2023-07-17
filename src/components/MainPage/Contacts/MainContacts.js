@@ -8,15 +8,16 @@ import {
   HiOutlineHeart,
   HiOutlineDotsHorizontal,
 } from "react-icons/hi";
-
 import { BiSearch } from "react-icons/bi";
+import data from "./contactsData.json";
 
 const MainContacts = () => {
   const [search, setSearch] = useState("");
+  const [menu, setMenu] = useState(false);
   const handleOnClickBtn = () => {
     if (search === "") alert("검색어를 입력해 주세요!");
   };
-  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const arr = data;
   const [heart, setHeart] = useState(false);
   return (
     <ContactWrap>
@@ -37,6 +38,7 @@ const MainContacts = () => {
               <HiOutlineDotsHorizontal style={{ color: "lightgray" }} />
             </MenuDiv>
             <ProfileImg src={profileExImg} />
+            <NameText>{item.name}</NameText>
             <CalendarButton>Calendar</CalendarButton>
             <ButtonsDiv>
               <IconButton>
@@ -118,14 +120,19 @@ const ContactDiv = styled.div`
   margin: 20px;
 `;
 const MenuDiv = styled.div`
-  display: flex;
-  justify-content: flex-end;
+  margin-left: 110px;
+  margin-top: -30px;
+  cursor: pointer;
 `;
 
 const ProfileImg = styled.img`
   width: 60px;
   height: 60px;
   border-radius: 60px;
+`;
+const NameText = styled.div`
+  margin-top: 10px;
+  font-size: 13px;
 `;
 const CalendarButton = styled.div`
   width: 114px;
